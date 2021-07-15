@@ -122,13 +122,13 @@
                 <version>3.1.2</version>
                 <configuration>
                     <from>
-                        <!-- <image>fabric8/java-alpine-openjdk11-jre</image> -->
-                        <image>adoptopenjdk/openjdk11:alpine-jre</image>
+                        <image>fabric8/java-alpine-openjdk11-jre</image>
+                        <!-- <image>adoptopenjdk/openjdk11:alpine-jre</image> -->
                     </from>
                     <to>
                         <image>andyhan/${project.artifactId}</image>
                     </to>
-                    <containerizingMode>exploded</containerizingMode>
+                    <containerizingMode>packaged</containerizingMode>
                     <container>
                         <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                         <labels>
@@ -136,7 +136,7 @@
                         </labels>
                         <jvmFlags>
                             <jvmFlag>-Dspring.profiles.active=prod</jvmFlag>
-                            <jvmFlag>-Dspring.additional-config.location=optional:file:/app/config.yml</jvmFlag>
+                            <jvmFlag>-Dspring.additional-config.location=optional:file:/app/config</jvmFlag>
                             <jvmFlag>-Djava.awt.headless=true</jvmFlag>
                             <jvmFlag>-Duser.timezone=PRC</jvmFlag>
                             <jvmFlag>-Dfile.encoding=UTF-8</jvmFlag>
