@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.2</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>spring-boot-demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>spring-boot-demo</name>
+    <description>Demo project for Spring Boot</description>
+
+    <properties>
+        <java.version>11</java.version>
+
+        <m2e.apt.activation>jdt_apt</m2e.apt.activation>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>kunlun-public-repository</id>
+            <name>Kunlun Repository by Nexus</name>
+            <url>https://kunlun.shijicloud.com/nexus/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>kunlun-public-plugin-repository</id>
+            <name>Kunlun Repository by Nexus</name>
+            <url>https://kunlun.shijicloud.com/nexus/repository/maven-public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <repository>
+            <id>kunlun-release</id>
+            <name>Kunlun Release Repository</name>
+            <url>https://kunlun.shijicloud.com/nexus/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>kunlun-snapshot</id>
+            <name>Kunlun Snapshot Repository</name>
+            <url>https://kunlun.shijicloud.com/nexus/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <from>
+                        <!-- <image>fabric8/java-alpine-openjdk11-jre</image> -->
+                        <image>adoptopenjdk/openjdk11:alpine-jre</image>
+                    </from>
+                    <to>
+                        <image>andyhan/${project.artifactId}</image>
+                    </to>
+                    <containerizingMode>exploded</containerizingMode>
+                    <container>
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                        <labels>
+                            <org.opencontainers.image.authors>andy.han@shijigroup.com</org.opencontainers.image.authors>
+                        </labels>
+                        <jvmFlags>
+                            <jvmFlag>-Dspring.profiles.active=prod</jvmFlag>
+                            <jvmFlag>-Dspring.additional-config.location=optional:file:/app/config.yml</jvmFlag>
+                            <jvmFlag>-Djava.awt.headless=true</jvmFlag>
+                            <jvmFlag>-Duser.timezone=PRC</jvmFlag>
+                            <jvmFlag>-Dfile.encoding=UTF-8</jvmFlag>
+                            <jvmFlag>-Xms64m</jvmFlag>
+                            <jvmFlag>-Xmx384m</jvmFlag>
+                            <jvmFlag>-XX:+UseG1GC</jvmFlag>
+                        </jvmFlags>
+                        <environment>
+                            <TZ>Asia/Shanghai</TZ>
+                        </environment>
+                    </container>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>java11-plus</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.glassfish.jaxb</groupId>
+                    <artifactId>jaxb-runtime</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+</project>
