@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.springbootdemo.model.Employee;
 import com.example.springbootdemo.repository.EmployeeRepository;
 
+import io.micrometer.core.annotation.Timed;
+
 /**
  * EmployeeController
  *
@@ -50,19 +52,20 @@ public class EmployeeController {
 	}
 
 	// Single item Async way
+	@Timed(histogram = true)
 	@GetMapping("/employeesAsync/{id}")
 	CompletionStage<Employee> oneAsync(@PathVariable Long id) {
 
-		// return CompletableFuture.completedFuture(one(id));
-		Executors.newSingleThreadExecutor();
 		return CompletableFuture
 				.supplyAsync(() -> one(id), Executors.newWorkStealingPool())
 				.whenCompleteAsync((e, t) -> {
 					System.out.println(e + " " + Instant.now());
 				}, Executors.newWorkStealingPool());
+
 	}
 
 	// Single item
+	@Timed
 	@GetMapping("/employees/{id}")
 	Employee one(@PathVariable Long id) {
 
