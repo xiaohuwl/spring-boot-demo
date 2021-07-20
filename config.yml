@@ -1,7 +1,0 @@
-server:
-  port: 8080
-  
-spring:
-  datasource: 
-    hikari:
-      pool-name: master-5      

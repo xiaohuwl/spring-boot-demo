@@ -1,6 +1,10 @@
 server:
   shutdown: graceful
   port: 8180
+  undertow:
+    threads:
+      io: 4
+      worker: 8
   
 spring:
   datasource:
@@ -21,6 +25,7 @@ spring:
 management:
   server:
     port: 8192
+        
   endpoints:  
     web:
       exposure:
@@ -33,4 +38,4 @@ management:
     health:
       show-details: always
       probes:
-        enabled: true
+        enabled: true     

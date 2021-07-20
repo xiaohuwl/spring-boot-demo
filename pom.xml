@@ -64,11 +64,27 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <artifactId>spring-boot-starter-undertow</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.undertow</groupId>
+                    <artifactId>undertow-websockets-jsr</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -122,21 +138,19 @@
                 <version>3.1.2</version>
                 <configuration>
                     <from>
-                        <image>fabric8/java-alpine-openjdk11-jre</image>
-                        <!-- <image>adoptopenjdk/openjdk11:alpine-jre</image> -->
+                        <!-- <image>fabric8/java-alpine-openjdk11-jre</image> -->
+                        <image>adoptopenjdk/openjdk11:alpine-jre</image>
                     </from>
                     <to>
                         <image>andyhan/${project.artifactId}</image>
                     </to>
-                    <containerizingMode>packaged</containerizingMode>
                     <container>
                         <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                         <labels>
                             <org.opencontainers.image.authors>andy.han@shijigroup.com</org.opencontainers.image.authors>
                         </labels>
                         <jvmFlags>
-                            <jvmFlag>-Dspring.profiles.active=prod</jvmFlag>
-                            <jvmFlag>-Dspring.additional-config.location=optional:file:/app/config</jvmFlag>
+                            <jvmFlag>-Dspring.profiles.active=production</jvmFlag>
                             <jvmFlag>-Djava.awt.headless=true</jvmFlag>
                             <jvmFlag>-Duser.timezone=PRC</jvmFlag>
                             <jvmFlag>-Dfile.encoding=UTF-8</jvmFlag>
